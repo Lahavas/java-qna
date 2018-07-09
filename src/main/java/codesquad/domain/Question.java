@@ -1,6 +1,19 @@
 package codesquad.domain;
 
+import codesquad.dto.QuestionDto;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
 public class Question {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     private String writer;
     private String title;
     private String contents;
@@ -12,6 +25,14 @@ public class Question {
         this.writer = writer;
         this.title = title;
         this.contents = contents;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getWriter() {
@@ -36,5 +57,11 @@ public class Question {
 
     public void setContents(String contents) {
         this.contents = contents;
+    }
+
+    public void update(QuestionDto questionDto) {
+        this.writer = questionDto.getWriter();
+        this.title = questionDto.getTitle();
+        this.contents = questionDto.getContents();
     }
 }
