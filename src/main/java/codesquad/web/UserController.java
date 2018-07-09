@@ -12,13 +12,12 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 @RequestMapping("/users")
 public class UserController {
-
     @Autowired
     private UserRepository userRepository;
 
     @PostMapping("")
-    public String create(UserDto userDto) {
-        userRepository.save(userDto.toEntity());
+    public String create(UserDto dto) {
+        userRepository.save(dto.toEntity());
         return "redirect:/users";
     }
 
@@ -38,8 +37,7 @@ public class UserController {
     public String updateUser(@PathVariable Long id, UserDto dto) {
         User user = findUserOrThrow(id);
 
-        if (user.equalPassword(dto.getCurrentPassword())) {
-            user.update(dto);
+        if (user.update(dto)) {
             userRepository.save(user);
         }
 
@@ -58,10 +56,7 @@ public class UserController {
     }
 
     private User findUserOrThrow(Long id) {
-        User user = userRepository.findById(id).orElse(null);
-        if (user == null) {
-            throw new UserNotFoundException();
-        }
-        return user;
+        return userRepository.findById(id)
+                .orElseThrow(UserNotFoundException::new);
     }
 }

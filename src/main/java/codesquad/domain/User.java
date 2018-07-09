@@ -52,23 +52,7 @@ public class User {
         return email;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public boolean equalPassword(String password) {
+    private boolean equalPassword(String password) {
         return this.password.equals(password);
     }
 
@@ -82,9 +66,15 @@ public class User {
                 '}';
     }
 
-    public void update(UserDto dto) {
+    public boolean update(UserDto dto) {
+        if (!equalPassword(dto.getCurrentPassword())) {
+            return false;
+        }
+
         this.email = dto.getEmail();
         this.name = dto.getName();
         this.password = dto.getPassword();
+
+        return true;
     }
 }

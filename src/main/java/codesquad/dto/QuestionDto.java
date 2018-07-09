@@ -10,12 +10,6 @@ public class QuestionDto {
     public QuestionDto() {
     }
 
-    public QuestionDto(String writer, String title, String contents) {
-        this.writer = writer;
-        this.title = title;
-        this.contents = contents;
-    }
-
     public String getWriter() {
         return writer;
     }
